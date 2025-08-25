@@ -15,6 +15,15 @@ impl Default for MyApp {
     }
 }
 
+impl MyApp {
+    pub fn new(shift_characters: [char; 2], backspace_character: char) -> Self {
+        Self {
+            text: "edit me".to_string(),
+            keyboard: Keyboard::new(shift_characters, backspace_character),
+        }
+    }
+}
+
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         CentralPanel::default().show(ctx, |ui| {

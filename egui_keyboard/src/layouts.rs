@@ -12,12 +12,13 @@ impl Default for KeyboardLayout {
 }
 
 impl KeyboardLayout {
-    pub(crate) fn get_keys(&self, uppercase: bool) -> Vec<Vec<Key>> {
-        match (self, uppercase) {
-            (KeyboardLayout::Qwerty, false) => qwerty(),
-            (KeyboardLayout::Qwerty, true) => qwerty_upper(),
-            (KeyboardLayout::Colemak, false) => colemak(),
-            (KeyboardLayout::Colemak, true) => colemak_upper(),
+    pub(crate) fn get_keys(&self, uppercase: bool, special: bool) -> Vec<Vec<Key>> {
+        match (self, uppercase, special) {
+            (KeyboardLayout::Qwerty, false, false) => qwerty(),
+            (KeyboardLayout::Qwerty, true, false) => qwerty_upper(),
+            (KeyboardLayout::Qwerty, _, true) => qwerty_special(),
+            (KeyboardLayout::Colemak, false, _) => colemak(),
+            (KeyboardLayout::Colemak, true, _) => colemak_upper(),
         }
     }
 }
@@ -58,7 +59,6 @@ pub(crate) fn qwerty() -> Vec<Vec<Key>> {
             Key::Text("j"),
             Key::Text("k"),
             Key::Text("l"),
-            Key::Text(":"),
         ],
         vec![
             Key::Upper,
@@ -69,28 +69,25 @@ pub(crate) fn qwerty() -> Vec<Vec<Key>> {
             Key::Text("b"),
             Key::Text("n"),
             Key::Text("m"),
-            Key::Text(","),
-            Key::Text("."),
-            Key::Text("/"),
             Key::Backspace,
         ],
-        vec![Key::Text(" ")],
+        vec![Key::Special, Key::Text(","), Key::Space, Key::Text(".")],
     ]
 }
 
 pub(crate) fn qwerty_upper() -> Vec<Vec<Key>> {
     vec![
         vec![
-            Key::Text("!"),
-            Key::Text("@"),
-            Key::Text("#"),
-            Key::Text("$"),
-            Key::Text("%"),
-            Key::Text("^"),
-            Key::Text("&"),
-            Key::Text("*"),
-            Key::Text("("),
-            Key::Text(")"),
+            Key::Text("1"),
+            Key::Text("2"),
+            Key::Text("3"),
+            Key::Text("4"),
+            Key::Text("5"),
+            Key::Text("6"),
+            Key::Text("7"),
+            Key::Text("8"),
+            Key::Text("9"),
+            Key::Text("0"),
         ],
         vec![
             Key::Text("Q"),
@@ -114,7 +111,6 @@ pub(crate) fn qwerty_upper() -> Vec<Vec<Key>> {
             Key::Text("J"),
             Key::Text("K"),
             Key::Text("L"),
-            Key::Text(";"),
         ],
         vec![
             Key::Upper,
@@ -125,12 +121,62 @@ pub(crate) fn qwerty_upper() -> Vec<Vec<Key>> {
             Key::Text("B"),
             Key::Text("N"),
             Key::Text("M"),
+            Key::Backspace,
+        ],
+        vec![Key::Special, Key::Text(","), Key::Space, Key::Text(".")],
+    ]
+}
+
+pub(crate) fn qwerty_special() -> Vec<Vec<Key>> {
+    vec![
+        vec![
+            Key::Text("1"),
+            Key::Text("2"),
+            Key::Text("3"),
+            Key::Text("4"),
+            Key::Text("5"),
+            Key::Text("6"),
+            Key::Text("7"),
+            Key::Text("8"),
+            Key::Text("9"),
+            Key::Text("0"),
+        ],
+        vec![
+            Key::Text("+"),
+            Key::Text("="),
+            Key::Text("/"),
+            Key::Text("_"),
             Key::Text("<"),
             Key::Text(">"),
+            Key::Text("["),
+            Key::Text("]"),
+            Key::Text("{"),
+            Key::Text("}"),
+        ],
+        vec![
+            Key::Text("!"),
+            Key::Text("@"),
+            Key::Text("#"),
+            Key::Text("$"),
+            Key::Text("%"),
+            Key::Text("^"),
+            Key::Text("&"),
+            Key::Text("*"),
+            Key::Text("("),
+            Key::Text(")"),
+        ],
+        vec![
+            Key::Text("-"),
+            Key::Text("'"),
+            Key::Text("`"),
+            Key::Text("~"),
+            Key::Text("\""),
+            Key::Text(":"),
+            Key::Text(";"),
             Key::Text("?"),
             Key::Backspace,
         ],
-        vec![Key::Text(" ")],
+        vec![Key::Special, Key::Text(","), Key::Space, Key::Text(".")],
     ]
 }
 
